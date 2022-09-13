@@ -32,6 +32,18 @@ document.addEventListener("DOMContentLoaded", function(){
         previousScreen.textContent = currentValue;
         currentScreen.textContent = currentValue;
 
+    });
+
+    equal.addEventListener('click', function(){
+        if(currentValue != '' && previousValue != ''){ 
+        calculate();
+        previousScreen.textContent = '';
+        currentScreen.textContent = previousValue;
+        };
+    });
+
+    decimal.addEventListener('click', function(){
+        addDecimal();
     })
 
 });
@@ -42,8 +54,37 @@ function handleNumber(num){
     } 
 };
 
-function handleOperator(op){
-    operator = op;
+function handleOperator(oper){
+    operator = oper;
     previousValue = currentValue;
     currentValue = '';
 }
+
+function calculate(){
+    previousValue = Number(previousValue);
+    currentValue = Number(currentValue);
+
+    if(operator === '+'){
+        previousValue += currentValue;
+    } else if(operator === '-'){
+        previousValue -= currentValue;
+    } else if(operator === 'x'){
+        previousValue *= currentValue;
+    } else if(operator === '/'){
+        previousValue /= currentValue;
+        };
+
+    previousValue = roundNumber(previousValue);
+    previousValue = previousValue.toString();
+    currentValue = previousValue.toString();
+};
+
+function roundNumber(num){
+    return Math.round(num * 1000) / 1000; 
+};
+
+function addDecimal(){
+    if(!currentValue.includes('.')){
+        currentValue += '.';
+    };
+};
